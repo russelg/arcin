@@ -32,8 +32,9 @@ Configloader configloader(0x801f800);
 
 config_t config;
 
-auto dev_desc = device_desc(0x200, 0, 0, 0, 64, 0x1ccf, 0x1014, 0x110, 1, 2, 3, 1);
-// auto dev_desc = device_desc(0x200, 0, 0, 0, 64, 0x1d50, 0x6080, 0x110, 1, 2, 3, 1);
+auto dev_desc = device_desc(0x200, 0, 0, 0, 64, 0x1ccf, 0x1014, 0x110, 1, 2, 3, 1); // EAC
+// auto dev_desc = device_desc(0x200, 0, 0, 0, 64, 0x1d50, 0x6080, 0x110, 1, 2, 3, 1); // Default
+
 auto conf_desc = configuration_desc(1, 1, 0, 0xc0, 0,
 	// HID interface.
 	interface_desc(0, 0, 1, 0x03, 0x00, 0x00, 0,
@@ -122,7 +123,7 @@ class WS2812B {
 		}
 
 		void update(uint8_t r, uint8_t g, uint8_t b) {
-			if(busy) { return; }
+			// if(busy) { return; }
 
 			set_color(r, g, b);
 
@@ -328,8 +329,8 @@ class AnalogAxis : public Axis {
 
 AnalogAxis axis_ana1(ADC1, 2);
 AnalogAxis axis_ana2(ADC2, 4);
-ResponsiveAnalogRead ana1_responsive(false, 0.05);
-ResponsiveAnalogRead ana2_responsive(false, 0.05);
+ResponsiveAnalogRead ana1_responsive(true, 0.05); // 0.075
+ResponsiveAnalogRead ana2_responsive(true, 0.05);
 
 int main() {
 	rcc_init();
